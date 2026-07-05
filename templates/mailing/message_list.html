@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Сообщения{% endblock %}
+{% block content %}
+<h1>Сообщения</h1>
+<a class="btn" href="{% url 'mailing:message_create' %}">+ Новое сообщение</a>
+<table>
+    <thead><tr><th>Тема</th><th>Владелец</th><th>Создано</th><th></th></tr></thead>
+    <tbody>
+    {% for m in messages_list %}
+        <tr>
+            <td>{{ m.subject }}</td>
+            <td>{{ m.owner.email }}</td>
+            <td>{{ m.created_at|date:"d.m.Y H:i" }}</td>
+            <td>
+                {% if m.owner_id == user.id or user.is_staff %}
+                <a class="btn secondary" href="{% url 'mailing:message_update' m.pk %}">Изменить</a>
+                <a class="btn danger" href="{% url 'mailing:message_delete' m.pk %}">Удалить</a>
+                {% endif %}
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="4">Сообщений пока нет.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
