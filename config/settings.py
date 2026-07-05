@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mailing',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,5 @@ CACHES = {
     }
 }
 CACHE_ENABLED = os.getenv("cache_enabled", "True") == "True"
+
+DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")

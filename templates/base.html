@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Сервис рассылок{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<header class="navbar">
+    <a href="{% url 'mailing:home' %}" class="brand">Сервис рассылок</a>
+    <nav>
+        {% if user.is_authenticated %}
+            <a href="{% url 'mailing:message_list' %}">Сообщения</a>
+            <a href="{% url 'clients:client_list' %}">Клиенты</a>
+            <a href="{% url 'mailing:mailing_list' %}">Рассылки</a>
+            <a href="{% url 'mailing:stats' %}">Статистика</a>
+            <span class="user-info">{{ user.email }}{% if user.role %} ({{ user.get_role_display }}){% endif %}</span>
+            <form action="{% url 'users:logout' %}" method="post" class="inline-form">
+                {% csrf_token %}
+                <button type="submit" class="link-button">Выйти</button>
+            </form>
+        {% else %}
+            <a href="{% url 'users:login' %}">Войти</a>
+            <a href="{% url 'users:register' %}">Регистрация</a>
+        {% endif %}
+    </nav>
+</header>
+<main class="container">
+    {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+            <li class="message {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>
