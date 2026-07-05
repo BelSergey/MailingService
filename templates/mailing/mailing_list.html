@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Рассылки{% endblock %}
+{% block content %}
+<h1>Рассылки</h1>
+<a class="btn" href="{% url 'mailing:mailing_create' %}">+ Новая рассылка</a>
+<table>
+    <thead><tr><th>Сообщение</th><th>Начало</th><th>Окончание</th><th>Статус</th><th></th></tr></thead>
+    <tbody>
+    {% for m in mailing_list_items %}
+        <tr>
+            <td><a href="{% url 'mailing:mailing_detail' m.pk %}">{{ m.message.subject }}</a></td>
+            <td>{{ m.start_time|date:"d.m.Y H:i" }}</td>
+            <td>{{ m.end_time|date:"d.m.Y H:i" }}</td>
+            <td>
+                {% if m.status == 'created' %}<span class="status-badge status-created">Создана</span>
+                {% elif m.status == 'running' %}<span class="status-badge status-running">Запущена</span>
+                {% else %}<span class="status-badge status-finished">Завершена</span>{% endif %}
+            </td>
+            <td>
+                {% if m.owner_id == user.id or user.is_staff %}
+                <a class="btn secondary" href="{% url 'mailing:mailing_update' m.pk %}">Изменить</a>
+                <a class="btn danger" href="{% url 'mailing:mailing_delete' m.pk %}">Удалить</a>
+                {% endif %}
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="5">Рассылок пока нет.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
