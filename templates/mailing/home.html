@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<h1>Сервис управления рассылками</h1>
+<p>Добро пожаловать! Здесь вы можете создавать клиентов, сообщения и рассылки, а также следить за статистикой отправок.</p>
+{% if not user.is_authenticated %}
+<p><a class="btn" href="{% url 'users:login' %}">Войти</a> <a class="btn secondary" href="{% url 'users:register' %}">Регистрация</a></p>
+{% endif %}
+{% endblock %}

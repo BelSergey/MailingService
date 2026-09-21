@@ -1,0 +1,51 @@
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; margin: 0; background: #f4f6f8; color: #222; }
+
+.navbar { display: flex; justify-content: space-between; align-items: center; background: #2c3e50; padding: 12px 24px; }
+
+.navbar .brand { color: #fff; font-weight: bold; text-decoration: none; font-size: 18px; }
+
+.navbar nav a, .navbar nav .user-info { color: #ecf0f1; margin-left: 16px; text-decoration: none; }
+
+.navbar nav a:hover { text-decoration: underline; }
+
+.link-button { background: none; border: none; color: #ecf0f1; cursor: pointer; margin-left: 16px; font: inherit; }
+
+.container { max-width: 960px; margin: 24px auto; background: #fff; padding: 24px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+
+table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+
+th, td { padding: 8px 10px; border-bottom: 1px solid #e0e0e0; text-align: left; }
+
+.btn { display: inline-block; padding: 6px 14px; background: #2c3e50; color: #fff; text-decoration: none; border-radius: 4px; border: none; cursor: pointer; font-size: 14px; }
+
+.btn.danger { background: #c0392b; }
+
+.btn.secondary { background: #7f8c8d; }
+
+form p { margin: 10px 0; }
+
+input, textarea, select { width: 100%; padding: 6px; margin-top: 4px; }
+
+.messages { list-style: none; padding: 0; }
+
+.messages .message { padding: 8px 12px; margin-bottom: 8px; border-radius: 4px; background: #eef; }
+
+.messages .error { background: #fdd; }
+
+.messages .success { background: #dfd; }
+
+.status-badge { padding: 2px 8px; border-radius: 10px; font-size: 12px; color: #fff; }
+
+.status-created { background: #7f8c8d; }
+
+.status-running { background: #27ae60; }
+
+.status-finished { background: #c0392b; }
+
+.stats-grid { display: flex; gap: 16px; flex-wrap: wrap; }
+
+
+.stat-card { flex: 1; min-width: 180px; background: #ecf0f1; padding: 16px; border-radius: 6px; text-align: center; }
+
+.stat-card .value { font-size: 28px; font-weight: bold; }

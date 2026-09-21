@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{% if object %}Редактирование{% else %}Новая{% endif %} рассылка</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Сохранить</button>
+    <a class="btn secondary" href="{% url 'mailing:mailing_list' %}">Отмена</a>
+</form>
+{% endblock %}

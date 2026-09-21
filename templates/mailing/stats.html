@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Статистика{% endblock %}
+{% block content %}
+<h1>Статистика</h1>
+<div class="stats-grid">
+    <div class="stat-card"><div class="value">{{ total_mailings }}</div><div>Всего рассылок</div></div>
+    <div class="stat-card"><div class="value">{{ running_mailings }}</div><div>Активных рассылок</div></div>
+    <div class="stat-card"><div class="value">{{ total_clients }}</div><div>Уникальных получателей</div></div>
+</div>
+<p style="margin-top:16px;color:#7f8c8d;font-size:13px;">
+    {% if from_cache %}Данные получены из кэша.{% else %}Данные посчитаны заново и сохранены в кэш на 60 секунд.{% endif %}
+</p>
+{% endblock %}

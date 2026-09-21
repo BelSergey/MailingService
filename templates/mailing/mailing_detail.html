@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Рассылка{% endblock %}
+{% block content %}
+<h1>{{ mailing.message.subject }}</h1>
+<p>
+    Статус:
+    {% if mailing.status == 'created' %}<span class="status-badge status-created">Создана</span>
+    {% elif mailing.status == 'running' %}<span class="status-badge status-running">Запущена</span>
+    {% else %}<span class="status-badge status-finished">Завершена</span>{% endif %}
+</p>
+<p>Начало: {{ mailing.start_time|date:"d.m.Y H:i" }} &nbsp;|&nbsp; Окончание: {{ mailing.end_time|date:"d.m.Y H:i" }}</p>
+<p>Получателей: {{ mailing.recipients.count }}</p>
+
+{% if can_manage %}
+<form method="post" action="{% url 'mailing:mailing_send' mailing.pk %}" class="inline-form">
+    {% csrf_token %}
+    <button class="btn" type="submit">Отправить сейчас</button>
+</form>
+<a class="btn secondary" href="{% url 'mailing:mailing_update' mailing.pk %}">Изменить</a>
+{% endif %}
+
+{% if user.is_staff or user.is_manager %}
+<form method="post" action="{% url 'mailing:mailing_toggle_active' mailing.pk %}" class="inline-form">
+    {% csrf_token %}
+    <button class="btn {% if mailing.is_active %}danger{% endif %}" type="submit">
+        {% if mailing.is_active %}Отключить рассылку{% else %}Включить рассылку{% endif %}
+    </button>
+</form>
+{% endif %}
+
+<h2>Последние попытки отправки</h2>
+<table>
+    <thead><tr><th>Дата</th><th>Получатель</th><th>Статус</th><th>Ответ сервера</th></tr></thead>
+    <tbody>
+    {% for a in attempts %}
+        <tr>
+            <td>{{ a.attempted_at|date:"d.m.Y H:i:s" }}</td>
+            <td>{{ a.recipient.email }}</td>
+            <td>{{ a.get_status_display }}</td>
+            <td>{{ a.server_response|truncatechars:80 }}</td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="4">Попыток пока не было.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
